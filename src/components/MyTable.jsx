@@ -53,7 +53,7 @@ export default function MyTable() {
 
                 {subset.map((person, index) => {
                     return (
-                        <tr key={index} className="border-b-2 border-b-gray">
+                        <tr key={index} className={`border-b-2 border-b-gray ${person.status === "single"? "bg-light-red" :""}`}>
                             <td>{index+firstPersonInTable}</td>
                             <td className={tdStyles}>{person.age}</td>
                             <td className={tdStyles}>{person.visits}</td>
