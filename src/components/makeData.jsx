@@ -10,7 +10,7 @@ const range = len => {
 const newPerson = () => {
     const statusChance = Math.random()
     return {
-        age: Math.floor(Math.random() * 30),
+        age: (Math.floor(Math.random() * 30)),
         visits: Math.floor(Math.random() * 100),
         progress: Math.floor(Math.random() * 100),
         status:

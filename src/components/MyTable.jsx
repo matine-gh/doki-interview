@@ -1,28 +1,21 @@
 import makeData from "@/components/makeData";
 import Pagination from "@/components/pagination";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {IconButton} from "@mui/material";
 
-const range = len => {
-    const arr = []
-    for (let i = 0; i < len; i++) {
-        arr.push(i)
-    }
-    return arr
-}
+import InfoIcon from '@mui/icons-material/Info';
+import MyModal from "@/components/myModal";
+
 
 
 export default function MyTable() {
 
     const tableData = makeData(90);
+
     const [currentPage, setCurrentPage] = useState(1);
+
     const postsPerPage = 12;
 
-
-    // console.log(makeData(20));
-    // Get current posts
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = tableData.slice(indexOfFirstPost, indexOfLastPost);
 
     // Change page
     const paginateFront = () => setCurrentPage(currentPage + 1);
@@ -36,6 +29,28 @@ export default function MyTable() {
 
     let subset = tableData.slice(firstPersonInTable, lastPersonInTable)
 
+    // modal
+    const [open, setOpen] = useState(false);
+    const handleClose = () => setOpen(false);
+    const [modalData, setModalData] = useState({age: 0, visits: 0, progress: 0, status: "aaa"});
+
+
+    // setShowModal(true);
+    const clickAction = (data) => {
+        setOpen(true);
+        setModalData(data)
+    }
+
+    const [hydrated, setHydrated] = useState(false);
+    useEffect(() => {
+        setHydrated(true);
+    }, []);
+    if (!hydrated) {
+        // Returns null on first render, so the client and server match
+        return null;
+
+
+    }
 
     return (
         <>
@@ -47,6 +62,7 @@ export default function MyTable() {
                     <th className={thStyles}>visits</th>
                     <th className={thStyles}>progress</th>
                     <th className={thStyles}>status</th>
+                    <th className={thStyles}>action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -59,6 +75,9 @@ export default function MyTable() {
                             <td className={tdStyles}>{person.visits}</td>
                             <td className={tdStyles}>{person.progress}</td>
                             <td className={tdStyles}>{person.status}</td>
+                            <td className={tdStyles}>
+                                <IconButton onClick={()=>clickAction(person)}><InfoIcon /></IconButton>
+                            </td>
                         </tr>
                     )
                 })}
@@ -76,7 +95,11 @@ export default function MyTable() {
                 lastPersonInTable={lastPersonInTable}
             />
 
-
+            <MyModal
+                open={open}
+                handleClose={handleClose}
+                modalData={modalData}
+            />
         </>
 
 )
