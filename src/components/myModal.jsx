@@ -42,9 +42,9 @@ export default function MyModal(props) {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Text in a modal
+                    Action
                 </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                <>
                     {
                         editMode?
                             <>
@@ -78,14 +78,14 @@ export default function MyModal(props) {
                                 />
                             </>
                             :<>
-                                <p>age: {props.modalData.age}</p>
-                                <p>visits: {props.modalData.visits}</p>
-                                <p>progress: {props.modalData.progress}</p>
-                                <p>status: {props.modalData.status}</p>
+                                <Typography>age: {props.modalData.age}</Typography>
+                                <Typography>visits: {props.modalData.visits}</Typography>
+                                <Typography>progress: {props.modalData.progress}</Typography>
+                                <Typography>status: {props.modalData.status}</Typography>
                             </>
                     }
                     <button className="bg-gray" onClick={editMode? onEdit :onSubmit}>{editMode? "submit" :"edit"}</button>
-                </Typography>
+                </>
             </Box>
         </Modal>
     )
